@@ -1,565 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIJAYAKUSUMA-TECH | IT Solutions & Professional Website Creation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* --- General Reset & Typography --- */
+        :root {
+            --primary-color: #007bff; /* A nice blue for tech/professional */
+            --secondary-color: #6c757d;
+            --silver-color: #9c9c9c;
+            --gold-color: #ffc107;
+            --platinum-color: #e5e5e5;
+            --text-dark: #212529;
+            --text-light: #f8f9fa;
+            --bg-light: #ffffff;
+            --bg-dark: #f4f7f9;
+            --font-family: 'Poppins', sans-serif;
+        }
 
-  <!-- 
-    - primary meta tags
-  -->
-  <title>Flipbook - Internetan</title>
-  <meta name="title" content="Flipbook - Internetan">
-  <meta name="description" content="This is a Book eCommerce html template made by codewithsadee">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- 
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-dark);
+        }
 
-  <!-- 
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
 
-  <!-- 
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Work+Sans:wght@400;500;700&display=swap"
-    rel="stylesheet">
+        /* --- Header/Hero Section --- */
+        .hero {
+            background-color: var(--bg-light);
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+        }
 
-  <!-- 
-    - preload images
-  -->
-  <link rel="preload" as="image" href="./assets/images/hero-banner.png">
-  <link rel="preload" as="image" href="./assets/images/hero-bg.jpg">
+        .hero h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
 
+        .hero p {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .order-btn {
+            display: inline-block;
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .order-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .order-btn i {
+            margin-right: 10px;
+        }
+
+        /* --- Pricing Section --- */
+        .pricing {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .pricing h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .plan {
+            flex: 1 1 300px;
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 350px;
+            min-height: 700px; /* Ensure plans have similar visual height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .plan-header {
+            margin-bottom: 20px;
+        }
+
+        .plan-header h3 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            padding: 10px 0;
+            border-radius: 8px 8px 0 0;
+            margin: -30px -30px 20px -30px;
+        }
+        
+        /* Plan-specific colors */
+        .silver .plan-header h3 { background-color: var(--silver-color); }
+        .gold .plan-header h3 { background-color: #ff9800; } /* Adjusted for better contrast/gold tone */
+        .platinum .plan-header h3 { 
+            background: linear-gradient(45deg, #ffd700, #ffc107, #ff9800); 
+            color: var(--text-dark);
+        }
+
+        .price {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .features {
+            text-align: left;
+            margin-bottom: 20px;
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95em;
+        }
+
+        .features li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 1.1em;
+        }
+
+        .plan-footer .renewal {
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .min-payment-btn {
+            display: block;
+            padding: 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .silver .min-payment-btn { background-color: var(--silver-color); color: white; }
+        .gold .min-payment-btn { background-color: #ff9800; color: white; }
+        .platinum .min-payment-btn { background-color: #ffb74d; color: var(--text-dark); }
+
+
+        /* --- Facilities/Features Section --- */
+        .facilities {
+            padding: 40px 0;
+            background-color: var(--bg-light);
+        }
+
+        .facilities h2 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .facility-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .facility-list li {
+            flex: 1 1 200px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--bg-dark);
+        }
+
+        .facility-list li i {
+            color: #25D366; /* Checkmark green */
+            margin-right: 10px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            .hero p { font-size: 1em; }
+            .pricing-grid { flex-direction: column; align-items: center; }
+            .plan { margin-bottom: 20px; width: 95%; max-width: none; min-height: auto; }
+            .facility-list { flex-direction: column; }
+            .facility-list li { text-align: left; }
+        }
+    </style>
 </head>
+<body>
 
-<body id="top">
-
-  <!-- 
-    - #HEADER
-  -->
-
-  <header class="header" data-header>
-    <div class="header-top">
-      <div class="container">
-
-        <a href="#" class="logo">
-          <img src="./assets/images/appLogoIcon.png" width="138" height="28" alt="booken home">
-        </a>
-
-        <div class="input-wrapper">
-          <input type="search" name="search" placeholder="Search our store" class="input-field">
-
-          <button class="btn btn-primary">Search</button>
-        </div>
-
-        <div class="header-action">
-
-          <button class="header-action-btn" aria-label="cart" title="Cart">
-            <span class="span">0</span>
-
-            <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-          </button>
-
-          <button class="nav-open-btn" aria-label="open menu" title="Open Menu" data-nav-toggler>
-            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-          </button>
-
-          <button class="header-action-btn" aria-label="user" title="User">
-            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-          </button>
-
-        </div>
-
-      </div>
-    </div>
-
-    <div class="header-bottom" data-navbar>
-      <div class="container">
-
-        <nav class="navbar">
-
-          <button class="nav-close-btn" data-nav-toggler aria-label="clsoe menu" title="Clsoe Menu">
-            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-          </button>
-
-          <div class="navbar-top">
-            <input type="search" name="search" placeholder="Search our store" class="input-field">
-
-            <button class="search-btn" aria-label="Search">
-              <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
-            </button>
-          </div>
-
-         
-
-        </nav>
-
-
-      </div>
-    </div>
-
-    <div class="overlay" data-overlay data-nav-toggler></div>
-  </header>
-
-
-
-
-
-  <main>
-    <article>
-
-      
-
-
-
-
-
-
-
-
-      <!-- 
-        - #FEATURED COLLECTION
-      -->
-
-      <section class="section featured" aria-label="featured collection">
+    <header class="hero">
         <div class="container">
-
-
-          <ul class="grid-list">
-
-            <li>
-              <div class="product-card">
-
-                <span class="card-badge">New</span>
-
-                <a href="https://flipbook.internetan.biz.id/buku" class="card-title"><div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/buku saku digital.jpg" width="384" height="480" loading="lazy" alt="Black Night"
-                    class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    Buku Saku <br>Deteksi Dini Cegah Stunting
-                  </h3>
-
-                  <data class="card-price" value="80">FREE</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star" aria-hidden="true"></ion-icon>
-                  </div></a>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-2.png" width="384" height="480" loading="lazy"
-                    alt="About The First Night" class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                   
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">About The First Night</a>
-                  </h3>
-
-                  <data class="card-price" value="19">$19.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-3.png" width="384" height="480" loading="lazy" alt="Open The Sky"
-                    class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to wishlist" title="Add to Wishlist">
-                      <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare" title="Compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to cart" title="Add to Cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Open The Sky</a>
-                  </h3>
-
-                  <data class="card-price" value="80">$80.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-4.png" width="384" height="480" loading="lazy" alt="Book Hard Cover"
-                    class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to wishlist" title="Add to Wishlist">
-                      <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare" title="Compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to cart" title="Add to Cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Book Hard Cover</a>
-                  </h3>
-
-                  <data class="card-price" value="55">$55.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-5.png" width="384" height="480" loading="lazy"
-                    alt="The Big Book Of Science" class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to wishlist" title="Add to Wishlist">
-                      <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare" title="Compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to cart" title="Add to Cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">The Big Book Of Science</a>
-                  </h3>
-
-                  <data class="card-price" value="100">$100.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-6.png" width="384" height="480" loading="lazy" alt="By The Air"
-                    class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to wishlist" title="Add to Wishlist">
-                      <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare" title="Compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to cart" title="Add to Cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">By The Air</a>
-                  </h3>
-
-                  <data class="card-price" value="89">$89.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-7.png" width="384" height="480" loading="lazy"
-                    alt="Murdering Last Year" class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to wishlist" title="Add to Wishlist">
-                      <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare" title="Compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to cart" title="Add to Cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Murdering Last Year</a>
-                  </h3>
-
-                  <data class="card-price" value="34">$34.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="product-card">
-
-                <div class="card-banner img-holder" style="--width: 384; --height: 480;">
-                  <img src="./assets/images/book-8.png" width="384" height="480" loading="lazy" alt="Stay Healthy"
-                    class="img-cover">
-
-                  <div class="card-action">
-
-                    <button class="action-btn" aria-label="quick view" title="Quick View">
-                      <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to wishlist" title="Add to Wishlist">
-                      <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare" title="Compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to cart" title="Add to Cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Stay Healthy</a>
-                  </h3>
-
-                  <data class="card-price" value="67">$67.00</data>
-
-                  <div class="rating-wrapper">
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
+                       <h1>WIJAYAKUSUMA-TECH</h1>
+            <p>Your Professional IT Solution for Web Development and Digital Presence</p>
+            
+            <a href="https://wa.me/6285155153923" class="order-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i> ORDER HERE
+            </a>
         </div>
-      </section>
+    </header>
 
+    <section class="pricing">
+        <div class="container">
+            <h2>Pilihan Paket Pembuatan Website Profesional</h2>
+            
+            <div class="pricing-grid">
 
+                <div class="plan silver">
+                    <div class="plan-header">
+                        <h3><i class="fas fa-gem"></i> Silver</h3>
+                        <div class="price">Rp 5.000.000,-</div>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> 4 judul menu</li>
+                        <li><i class="fas fa-check-circle"></i> Domain web.id</li>
+                        <li><i class="fas fa-check-circle"></i> Hosting 500 MB</li>
+                        <li><i class="fas fa-check-circle"></i> Keamanan SSL</li>
+                        <li><i class="fas fa-check-circle"></i> Platform WP Premium</li>
+                        <li><i class="fas fa-check-circle"></i> Tamplate Premium berlisensi</li>
+                        <li><i class="fas fa-check-circle"></i> Respon server rata-rata 5 mili per detik</li>
+                        <li><i class="fas fa-check-circle"></i> Website bergaransi selamanya</li>
+                        <li><i class="fas fa-check-circle"></i> User, password dan video panduan edit</li>
+                    </ul>
+                    <div class="plan-footer">
+                        <p class="renewal">Perpanjangan: 300rb/tahun</p>
+                        <a href="https://wa.me/6285155153923?text=Saya%20tertarik%20dengan%20Paket%20Silver." class="min-payment-btn">
+                            DP min 2.5jt
+                        </a>
+                    </div>
+                </div>
 
+                <div class="plan gold">
+                    <div class="plan-header">
+                        <h3><i class="fas fa-crown"></i> Gold</h3>
+                        <div class="price">Rp 7.000.000,-</div>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> 8 judul menu</li>
+                        <li><i class="fas fa-check-circle"></i> Domain .com</li>
+                        <li><i class="fas fa-check-circle"></i> Hosting 3 GB</li>
+                        <li><i class="fas fa-check-circle"></i> Free fitur view web traffic</li>
+                        <li><i class="fas fa-check-circle"></i> Free e-banner dan logo</li>
+                        <li><i class="fas fa-check-circle"></i> Keamanan SSL</li>
+                        <li><i class="fas fa-check-circle"></i> Platform WP Premium</li>
+                        <li><i class="fas fa-check-circle"></i> Tamplate Premium berlisensi</li>
+                        <li><i class="fas fa-check-circle"></i> Respon server rata-rata 5 mili per detik</li>
+                        <li><i class="fas fa-check-circle"></i> Website bergaransi selamanya</li>
+                        <li><i class="fas fa-check-circle"></i> User, password dan video panduan edit</li>
+                    </ul>
+                    <div class="plan-footer">
+                        <p class="renewal">Perpanjangan: 250rb/tahun</p>
+                        <a href="https://wa.me/6285155153923?text=Saya%20tertarik%20dengan%20Paket%20Gold." class="min-payment-btn">
+                            DP min 3.5jt
+                        </a>
+                    </div>
+                </div>
 
+                <div class="plan platinum">
+                    <div class="plan-header">
+                        <h3><i class="fas fa-star"></i> Platinum</h3>
+                        <div class="price">Rp 10.000.000,-</div>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> 15 - 20 judul menu</li>
+                        <li><i class="fas fa-check-circle"></i> Domain .com / .biz.id / .co.id</li>
+                        <li><i class="fas fa-check-circle"></i> Hosting 5 GB</li>
+                        <li><i class="fas fa-check-circle"></i> Free email bisnis 1 tahun</li>
+                        <li><i class="fas fa-check-circle"></i> Cocok untuk toko online</li>
+                        <li><i class="fas fa-check-circle"></i> Free fitur view web traffic</li>
+                        <li><i class="fas fa-check-circle"></i> Free e-banner dan logo</li>
+                        <li><i class="fas fa-check-circle"></i> Keamanan SSL</li>
+                        <li><i class="fas fa-check-circle"></i> Platform WP Premium</li>
+                        <li><i class="fas fa-check-circle"></i> Tamplate Premium berlisensi</li>
+                        <li><i class="fas fa-check-circle"></i> Bandwith unlimited</li>
+                        <li><i class="fas fa-check-circle"></i> Respon server rata-rata 5 mili per detik</li>
+                        <li><i class="fas fa-check-circle"></i> Website bergaransi selamanya</li>
+                        <li><i class="fas fa-check-circle"></i> User, password dan video panduan edit</li>
+                    </ul>
+                    <div class="plan-footer">
+                        <p class="renewal">Perpanjangan: 400rb/tahun</p>
+                        <a href="https://wa.me/6285155153923?text=Saya%20tertarik%20dengan%20Paket%20Platinum." class="min-payment-btn">
+                            DP min 5 jt
+                        </a>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+    </section>
 
-    <div class="footer-bottom">
-      <div class="container">
+    <section class="facilities">
+        <div class="container">
+            <h2>Fasilitas Umum & Support Terbaik</h2>
+            <ul class="facility-list">
+                <li><i class="fas fa-check-square"></i> SEO Basic</li>
+                <li><i class="fas fa-check-square"></i> Artikel Original</li>
+                <li><i class="fas fa-check-square"></i> Free Maintanance</li>
+                <li><i class="fas fa-check-square"></i> Full Support System</li>
+                <li><i class="fas fa-check-square"></i> Free konsultasi 24 jam</li>
+            </ul>
+        </div>
+    </section>
+    
+    <a href="https://wa.me/6285155153923" target="_blank" class="whatsapp-float" style="position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 2em; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); z-index: 1000;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-        <p class="copyright">
-          Copyright 2024 | Made With Love by internetan.
-        </p>
-
-       
-
-      </div>
-    </div>
-
-  </footer>
-
-
-
-
-
-  <!-- 
-    - #BACK TO TOP
-  -->
-
-  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
-  </a>
-
-
-
-
-
-  <!-- 
-    - custom js link
-  -->
-  <script src="./assets/js/script.js" defer></script>
-
-  <!-- 
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <footer class="footer">
+        <div class="container">
+            &copy; 2025 WIJAYAKUSUMA-TECH. All Rights Reserved. | Your IT Solution.
+        </div>
+    </footer>
 
 </body>
-
 </html>
