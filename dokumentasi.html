@@ -1,1 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Dokumentasi Kegiatan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palet Warna macOS */
+            --mac-bg-light: #f0f0f0;
+            --mac-bg-medium: #e5e5e5;
+            --mac-text-dark: #333333;
+            --mac-text-light: #666666;
+            --mac-accent-blue: #007aff;
+            --mac-accent-hover: #005ce6;
+            --mac-border-light: #d0d0d0;
+            --mac-card-bg: #ffffff;
 
+            /* Shadows yang halus */
+            --mac-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --mac-shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --mac-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08);
+
+            --border-radius-sm: 6px;
+            --border-radius-md: 10px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--mac-bg-light);
+            margin: 0;
+            color: var(--mac-text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Scrollbar styling */
+        body::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        body::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .header {
+            background-color: var(--mac-card-bg);
+            color: var(--mac-text-dark);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--mac-border-light);
+            box-shadow: var(--mac-shadow-light);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 2.2em;
+            color: var(--mac-accent-blue);
+        }
+
+        .header p {
+            color: var(--mac-text-light);
+            font-size: 1.1em;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .filter-section {
+            background-color: var(--mac-card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--mac-shadow-medium);
+            margin-bottom: 30px;
+            border: 1px solid var(--mac-border-light);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        /* Mobile: Wrap filter buttons */
+        @media (max-width: 768px) {
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        .filter-button, .filter-select {
+            padding: 10px 18px;
+            border-radius: var(--border-radius-sm);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--mac-border-light);
+            background-color: var(--mac-card-bg);
+            color: var(--mac-text-dark);
+            appearance: none;
+            position: relative;
+            padding-right: 30px;
+        }
+
+        .filter-button:hover, .filter-select:hover {
+            border-color: var(--mac-accent-blue);
+            box-shadow: var(--mac-shadow-light);
+        }
+
+        .filter-select {
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16.1%208.1-3.8%204.9-4.8%2011.5-2.6%2017.5l139%20159.2c2.7%203.1%206.5%204.9%2010.5%204.9s7.8-1.8%2010.5-4.9l139-159.2c2.2-6%201.2-12.7-2.6-17.5z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px;
+        }
+
+
+        .filter-button.active {
+            background-color: var(--mac-accent-blue);
+            color: #fff;
+            border-color: var(--mac-accent-blue);
+            box-shadow: var(--mac-shadow-light);
+        }
+
+        .filter-button:not(.active):hover {
+            background-color: var(--mac-bg-medium);
+            border-color: #a0a0a0;
+        }
+
+        .docs-list {
+            margin-top: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-card {
+            background-color: var(--mac-card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--mac-shadow-medium);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            border: 1px solid var(--mac-border-light);
+            display: flex; /* Untuk layout thumbnail */
+            flex-direction: column; /* Thumbnail di atas, teks di bawah */
+        }
+
+        .doc-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--mac-shadow-hover);
+            border-color: var(--mac-accent-blue);
+        }
+
+        .card-thumbnail {
+            width: 100%;
+            height: 180px; /* Tinggi tetap untuk thumbnail */
+            background-color: var(--mac-bg-medium);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--mac-border-light);
+        }
+
+        .card-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Menjamin gambar memenuhi area tanpa terdistorsi */
+            display: block;
+        }
+
+        .card-header {
+            background-color: var(--mac-bg-medium);
+            color: var(--mac-text-dark);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--mac-border-light);
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1; /* Memastikan body mengisi ruang yang tersisa */
+        }
+
+        .card-body p {
+            margin: 0 0 8px;
+            font-size: 0.95em;
+            color: var(--mac-text-light);
+        }
+
+        .card-body p strong {
+            color: var(--mac-text-dark);
+            font-weight: 500;
+        }
+
+        .card-link {
+            display: inline-block;
+            background-color: var(--mac-accent-blue);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: var(--border-radius-sm);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .card-link:hover {
+            background-color: var(--mac-accent-hover);
+        }
+
+        .loading, .no-data {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: var(--mac-text-light);
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            .header {
+                padding: 25px 15px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 0 15px;
+            }
+            .grid-container {
+                grid-template-columns: 1fr; /* Satu kolom di mobile */
+            }
+            .filter-button, .filter-select {
+                font-size: 1em; /* Ukuran font sedikit lebih besar */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Sistem Dokumentasi</h1>
+        <p>Akses cepat ke semua dokumentasi kegiatan.</p>
+    </header>
+
+    <main class="container">
+        <section class="filter-section">
+            <div class="filter-group">
+                <button id="showAllBtn" class="filter-button active">Tampilkan Semua</button>
+                <select id="jenisFilter" class="filter-select">
+                    <option value="">Jenis Dokumentasi</option>
+                    <option value="Foto">Foto</option>
+                    <option value="Video">Video</option>
+                    <option value="Laporan">Laporan</option>
+                </select>
+                <select id="bulanFilter" class="filter-select">
+                    <option value="">Bulan</option>
+                    <option value="1">Januari</option>
+                    <option value="2">Februari</option>
+                    <option value="3">Maret</option>
+                    <option value="4">April</option>
+                    <option value="5">Mei</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">Agustus</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                </select>
+                <select id="tahunFilter" class="filter-select">
+                    <option value="">Tahun</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="docs-list">
+            <div id="loadingMessage" class="loading">Memuat data...</div>
+            <div id="dataContainer" class="grid-container">
+            </div>
+            <div id="noDataMessage" class="no-data">Tidak ada data yang ditemukan.</div>
+        </section>
+    </main>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwfhC4BC0DWFWL3ZkwjsUMpCRLoZg3dvt7HLS8K1zDCW2Tvn6PXxAaTmMK_FWIO4LotNw/exec'; // Ganti dengan URL Apps Script Anda
+        let allData = [];
+
+        // Fungsi untuk mengekstrak ID video YouTube
+        function getYouTubeVideoId(url) {
+            let videoId = null;
+            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
+            const match = url.match(regex);
+            if (match && match[1]) {
+                videoId = match[1];
+            }
+            return videoId;
+        }
+
+        async function fetchData() {
+            document.getElementById('loadingMessage').style.display = 'block';
+            document.getElementById('noDataMessage').style.display = 'none';
+            document.getElementById('dataContainer').innerHTML = '';
+            try {
+                const response = await fetch(`${API_URL}?action=getData`);
+                allData = await response.json();
+                displayData(allData);
+                populateYears(); // Pastikan dipanggil setelah data dimuat
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById('loadingMessage').innerText = 'Gagal memuat data.';
+            } finally {
+                document.getElementById('loadingMessage').style.display = 'none';
+            }
+        }
+
+        function displayData(data) {
+            const container = document.getElementById('dataContainer');
+            container.innerHTML = '';
+            if (data.length === 0) {
+                document.getElementById('noDataMessage').style.display = 'block';
+                return;
+            }
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'doc-card';
+
+                let thumbnailHtml = '';
+                const videoId = getYouTubeVideoId(item.linkDokumentasi);
+                if (videoId) {
+                    // Gunakan thumbnail kualitas tinggi (mqdefault, hqdefault, sddefault, maxresdefault)
+                    // maxresdefault adalah kualitas tertinggi, tapi tidak selalu tersedia.
+                    // hqdefault adalah pilihan yang baik dan hampir selalu tersedia.
+                    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                    thumbnailHtml = `
+                        <div class="card-thumbnail">
+                            <a href="${item.linkDokumentasi}" target="_blank">
+                                <img src="${thumbnailUrl}" alt="Thumbnail Video YouTube">
+                            </a>
+                        </div>
+                    `;
+                } else if (item.jenisDokumentasi === 'Foto' || item.linkDokumentasi.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                    // Jika link langsung ke gambar, tampilkan gambar
+                    thumbnailHtml = `
+                        <div class="card-thumbnail">
+                            <a href="${item.linkDokumentasi}" target="_blank">
+                                <img src="${item.linkDokumentasi}" alt="Dokumentasi Foto">
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    // Fallback jika tidak ada thumbnail atau bukan YouTube/Gambar
+                    thumbnailHtml = `
+                        <div class="card-thumbnail">
+                            <img src="https://via.placeholder.com/320x180?text=No+Thumbnail" alt="No Thumbnail">
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    ${thumbnailHtml}
+                    <div class="card-header">
+                        <h3>${item.namaKegiatan}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Jenis:</strong> ${item.jenisDokumentasi}</p>
+                        <p><strong>Tanggal:</strong> ${item.tanggalKegiatan}</p>
+                        <a href="${item.linkDokumentasi}" target="_blank" class="card-link">Lihat Dokumentasi</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function filterData() {
+            const jenis = document.getElementById('jenisFilter').value;
+            const bulan = document.getElementById('bulanFilter').value;
+            const tahun = document.getElementById('tahunFilter').value;
+            
+            let filteredData = allData;
+
+            if (jenis) {
+                filteredData = filteredData.filter(item => item.jenisDokumentasi === jenis);
+            }
+            if (bulan) {
+                 filteredData = filteredData.filter(item => {
+                    const date = new Date(item.tanggalKegiatan);
+                    return date.getMonth() + 1 == bulan;
+                });
+            }
+            if (tahun) {
+                filteredData = filteredData.filter(item => {
+                    const date = new Date(item.tanggalKegiatan);
+                    return date.getFullYear() == tahun;
+                });
+            }
+            
+            displayData(filteredData);
+        }
+
+        function populateYears() {
+            const yearSelect = document.getElementById('tahunFilter');
+            // Bersihkan opsi tahun sebelumnya
+            yearSelect.innerHTML = '<option value="">Tahun</option>'; 
+            const years = [...new Set(allData.map(d => new Date(d.tanggalKegiatan).getFullYear()))].sort((a, b) => b - a);
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.text = year;
+                yearSelect.appendChild(option);
+            });
+        }
+
+        document.getElementById('showAllBtn').addEventListener('click', () => {
+            document.getElementById('jenisFilter').value = '';
+            document.getElementById('bulanFilter').value = '';
+            document.getElementById('tahunFilter').value = '';
+            filterData();
+        });
+        document.getElementById('jenisFilter').addEventListener('change', filterData);
+        document.getElementById('bulanFilter').addEventListener('change', filterData);
+        document.getElementById('tahunFilter').addEventListener('change', filterData);
+
+        fetchData();
+    </script>
+</body>
+</html>
