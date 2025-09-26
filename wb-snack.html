@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stok Keripik</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <style>
+        :root {
+            --ubuntu-dark-bg: #2c2c2c;
+            --ubuntu-window-bg: #3e3e3e;
+            --ubuntu-header: #303030;
+            --ubuntu-orange: #E95420;
+            --ubuntu-purple: #873484;
+            --ubuntu-text: #dfdfdf;
+            --ubuntu-border: #555;
+            --font-size-base: 14px;
+        }
+
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            background-color: var(--ubuntu-dark-bg);
+            color: var(--ubuntu-text);
+            margin: 0;
+            padding: 15px;
+            font-size: var(--font-size-base);
+        }
+
+        .ubuntu-window {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--ubuntu-window-bg);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--ubuntu-border);
+            overflow: hidden;
+        }
+
+        .window-header {
+            background: var(--ubuntu-header);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .window-title { font-weight: 500; font-size: 0.95em; }
+        .window-controls { display: flex; gap: 8px; }
+        .control-btn { width: 12px; height: 12px; border-radius: 50%; }
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+
+        .window-body { padding: 20px; }
+        
+        h2 {
+            border-bottom: 2px solid var(--ubuntu-orange);
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 .fas { color: var(--ubuntu-orange); }
+
+        .input-button-container { margin-bottom: 25px; }
+        .input-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--ubuntu-orange);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: background-color 0.2s;
+        }
+        .input-button:hover { background-color: #d84a1a; }
+        .input-button .fas { margin-right: 8px; }
+        
+        .info-item {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .penghasilan-bulan {
+             display: flex;
+             justify-content: space-between;
+             font-size: 1.1em;
+        }
+
+        .loading { text-align: center; padding: 20px; font-size: 1.1em; }
+        .table-wrapper { overflow-x: auto; }
+        
+        table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+        th, td { padding: 10px 12px; text-align: left; }
+        thead tr { background-color: var(--ubuntu-orange); color: #ffffff; font-weight: 500; }
+        tbody tr { border-bottom: 1px solid var(--ubuntu-border); }
+        tbody tr:nth-of-type(even) { background-color: rgba(255, 255, 255, 0.03); }
+        tbody tr:last-of-type { border-bottom: 2px solid var(--ubuntu-orange); }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 0; }
+            .ubuntu-window { border-radius: 0; border: none; min-height: 100vh; }
+            .window-body { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ubuntu-window">
+        <div class="window-header">
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="window-title">Stok Keripik</div>
+            <div></div>
+        </div>
+
+        <div class="window-body">
+
+            <div class="input-button-container">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd1LLKl78fG0345PU9Bh6mjYk7wMa9fbpKjz7pSE73-26-vTg/viewform" target="_blank" class="input-button">
+                    <i class="fas fa-plus-circle"></i>Input Data
+                </a>
+            </div>
+
+            <div id="uang">
+                <h2><i class="fas fa-wallet"></i>Uang Bisa Diambil</h2>
+                <div id="uangContainer" class="loading"><i class="fas fa-spinner fa-spin"></i> Memuat...</div>
+            </div>
+                        <hr style="border-color: var(--ubuntu-border); margin: 25px 0;">
+            
+            <div id="listData">
+                <h2><i class="fas fa-boxes-stacked"></i>Riwayat Simpan</h2>
+                <div id="listContainer" class="loading"><i class="fas fa-spinner fa-spin"></i> Memuat...</div>
+            </div>
+            <hr style="border-color: var(--ubuntu-border); margin: 25px 0;">
+
+            <div id="penghasilan">
+                <h2><i class="fas fa-chart-line"></i>Penghasilan Per Bulan</h2>
+                <div id="penghasilanContainer" class="loading"><i class="fas fa-spinner fa-spin"></i> Menghitung...</div>
+            </div>
+
+            <hr style="border-color: var(--ubuntu-border); margin: 25px 0;">
+
+            <div id="grafikPenjualan">
+                <h2><i class="fas fa-chart-area"></i>Grafik Penjualan (PCS/Bulan)</h2>
+                <div id="chartContainer" class="loading"><i class="fas fa-spinner fa-spin"></i> Memuat grafik...</div>
+                <div id="salesChart" style="padding: 10px 0;"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxDIKjAs1RfjwY6YzvaNxy6hbhh4lwABrCU_FQfbXCH9Gnr2K9_-DIrT2hE9uj3fd-KCg/exec';
+
+        // --- Helper Functions ---
+        const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        const parseDate = (dateString) => {
+            const [day, month, year] = dateString.split('/');
+            return new Date(year, month - 1, day);
+        };
+        const NAMA_BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"]; // Disingkat untuk grafik
+
+        // --- Main Logic ---
+        fetch(APPS_SCRIPT_URL)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                const uangContainer = document.getElementById('uangContainer');
+                const listContainer = document.getElementById('listContainer');
+                const penghasilanContainer = document.getElementById('penghasilanContainer');
+                const chartContainer = document.getElementById('chartContainer');
+                const salesChartDiv = document.getElementById('salesChart');
+
+                if (!data.listData || data.listData.length === 0) {
+                    uangContainer.innerHTML = "<p>Belum ada data.</p>";
+                    listContainer.innerHTML = "<p>Belum ada data riwayat.</p>";
+                    penghasilanContainer.innerHTML = "<p>Belum ada data untuk dihitung.</p>";
+                    chartContainer.innerHTML = "<p>Belum ada data untuk grafik.</p>";
+                    return;
+                }
+
+                const sortedData = data.listData.sort((a, b) => parseDate(b['Tanggal']) - parseDate(a['Tanggal']));
+
+                const latestSingkong = sortedData.find(item => item['Jenis Keripik'] === 'SINGKONG');
+                const latestPisang = sortedData.find(item => item['Jenis Keripik'] === 'PISANG');
+                const uangSingkong = latestSingkong ? latestSingkong['Simpan Berapa PCS'] * 4000 : 0;
+                const uangPisang = latestPisang ? latestPisang['Simpan Berapa PCS'] * 4000 : 0;
+                
+                uangContainer.innerHTML = `
+                    <div class="info-item"><i class="fa-solid fa-cookie-bite" style="color:#a57d3a;"></i> <strong>Singkong:</strong> ${formatRupiah(uangSingkong)}</div>
+                    <div class="info-item"><i class="fa-solid fa-cookie-bite" style="color:#e9d34e;"></i> <strong>Pisang:</strong> ${formatRupiah(uangPisang)}</div>
+                `;
+
+                const monthlyTotals = {};
+                sortedData.forEach(item => {
+                    const date = parseDate(item['Tanggal']);
+                    const month = date.getMonth();
+                    const year = date.getFullYear();
+                    const key = `${year}-${String(month).padStart(2, '0')}`;
+                    
+                    if (!monthlyTotals[key]) {
+                        monthlyTotals[key] = { pcs: 0, label: `${NAMA_BULAN[month]} ${year}` };
+                    }
+                    monthlyTotals[key].pcs += item['Simpan Berapa PCS'];
+                });
+
+                const NAMA_BULAN_LENGKAP = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                let penghasilanHTML = Object.keys(monthlyTotals).sort().reverse().map(key => {
+                    const monthData = monthlyTotals[key];
+                    const [year, month] = key.split('-');
+                    const labelLengkap = `${NAMA_BULAN_LENGKAP[parseInt(month)]} ${year}`;
+                    const totalUang = monthData.pcs * 4000;
+                    return `<div class="info-item penghasilan-bulan">
+                                <span>${labelLengkap}</span>
+                                <strong>${formatRupiah(totalUang)}</strong>
+                            </div>`;
+                }).join('');
+                penghasilanContainer.innerHTML = penghasilanHTML;
+
+                // --- KODE GRAFIK APEXCHARTS ---
+                const sortedMonthlyKeys = Object.keys(monthlyTotals).sort();
+                const chartLabels = sortedMonthlyKeys.map(key => monthlyTotals[key].label);
+                const chartData = sortedMonthlyKeys.map(key => monthlyTotals[key].pcs);
+                
+                chartContainer.style.display = 'none';
+
+                const options = {
+                    series: [{
+                        name: "Jumlah PCS",
+                        data: chartData
+                    }],
+                    chart: {
+                        height: 350,
+                        type: 'area', // Tipe area agar ada warna di bawah garis
+                        toolbar: { show: false },
+                        foreColor: 'var(--ubuntu-text)' // Warna teks di grafik
+                    },
+                    dataLabels: { enabled: false },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 3,
+                        colors: ['var(--ubuntu-orange)']
+                    },
+                    fill: {
+                        type: 'gradient',
+                        colors: ['var(--ubuntu-orange)'],
+                        gradient: {
+                            opacityFrom: 0.6,
+                            opacityTo: 0.1,
+                        }
+                    },
+                    xaxis: {
+                        categories: chartLabels
+                    },
+                    yaxis: {
+                        min: 0,
+                        labels: {
+                            formatter: (val) => { return val.toFixed(0) }
+                        }
+                    },
+                    grid: {
+                        borderColor: 'var(--ubuntu-border)',
+                        strokeDashArray: 3
+                    },
+                    tooltip: {
+                        theme: 'dark'
+                    }
+                };
+
+                const chart = new ApexCharts(salesChartDiv, options);
+                chart.render();
+                // --- AKHIR KODE GRAFIK ---
+
+                let tableHTML = `
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Jenis Keripik</th>
+                                    <th>Jumlah (PCS)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                sortedData.forEach(item => {
+                    tableHTML += `
+                        <tr>
+                            <td>${item['Tanggal']}</td>
+                            <td>${item['Jenis Keripik']}</td>
+                            <td>${item['Simpan Berapa PCS']}</td>
+                        </tr>
+                    `;
+                });
+                tableHTML += `</tbody></table></div>`;
+                listContainer.innerHTML = tableHTML;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.querySelector('.window-body').innerHTML = `
+                    <h2 style="color: #ff5f56;"><i class="fas fa-exclamation-triangle"></i> Gagal Memuat Data</h2>
+                    <p>Pastikan URL Web App sudah benar dan script telah di-deploy dengan akses "Siapa saja".</p>
+                    <p>Error: ${error.message}</p>
+                `;
+            });
+    </script>
+
+</body>
+</html>
